@@ -1,17 +1,7 @@
-from tmlib.core import (
-    Scene,
-    Utility,
-    Transform,
-    Connection,
-    SkinWeight,
-    Controller,
-    File,
-    QuickData,
-    BlendShape,
-)
-from tmlib.module.PySide import QtCore, QtGui, QtWidgets, QAction
+from tmlib.core import File
+from tmlib.module.PySide import QtCore, QtGui, QtWidgets
 
-import os, importlib, webbrowser, inspect, configparser, re, json
+import os, re, json
 from tmlib.ui.interface_template import ToolkitWindow
 import maya.cmds as cmds
 import subprocess
@@ -19,8 +9,6 @@ import shutil
 
 from UkoreMaya.core import template_ui
 from ShotSplitter import function
-
-importlib.reload(function)
 
 
 class MainWindow(ToolkitWindow):
@@ -626,3 +614,18 @@ class MainWindow(ToolkitWindow):
                     self.base_model.appendRow(row_items)
             except Exception as e:
                 raise Exception(e)
+
+
+_window = None
+
+
+def show():
+    global _window
+    try:
+        _window.close()
+        _window.deleteLater()
+    except Exception:
+        pass
+    _window = MainWindow()
+    _window.show()
+    return _window
